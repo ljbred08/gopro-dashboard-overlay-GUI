@@ -85,9 +85,9 @@ section1 = CollapsibleSection(section1_layout, 'Advanced', '-SEC1-')
 
 # Define the layout
 layout = [
-    [sg.Text('Input Video File  \u2009'), sg.Input(key='input_video', enable_events=True, size=size), sg.FileBrowse(file_types=(('MP4 Files', '*.mp4'),))],
+    [sg.Text('Input Video File  \u2009'), sg.Input(key='input_video', enable_events=True, size=size), sg.FileBrowse(file_types=(('Video Files', '*.mp4 *.avi *.mov *.wmv *.flv *.mkv *.m4v'),))],
     [sg.Text('Suffix                 '), sg.InputText(key='output_suffix', default_text=OUTPUT_SUFFIX, enable_events=True, size=size)],
-    [sg.Text('Output Video File'), sg.Input(key='output_video',  size=size), sg.SaveAs(file_types=(('MP4 Files', '*.mp4'),))],
+    [sg.Text('Output Video File'), sg.Input(key='output_video',  size=size), sg.SaveAs(file_types=(('Video Files', '*.mp4 *.avi *.mov *.wmv *.flv *.mkv *.m4v'),))],
     [sg.Text('Map Style          '), sg.Combo([
         'local',
         'cyclosm',
