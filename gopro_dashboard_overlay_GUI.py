@@ -5,6 +5,37 @@ from collapsible_sections import CollapsibleSection
 import collapsible_sections as cs
 import sys
 import shutil
+from fontfinder import FontFinder
+
+def get_available_fonts():
+    """
+    Get available system fonts with prioritized fonts at the top
+    """
+    preferred_fonts = ['calibri', 'cambria', 'segoe ui', 'segoe print', 'liberation sans']
+
+    try:
+        ff = FontFinder()
+        system_fonts = ff.all_installed_families()
+
+        # Prioritize preferred fonts that are available
+        prioritized_fonts = []
+        for preferred in preferred_fonts:
+            for font in system_fonts:
+                if preferred.lower() in font.lower():
+                    prioritized_fonts.append(font)
+                    break
+
+        # Add other available fonts
+        other_fonts = sorted([f for f in system_fonts if f not in prioritized_fonts])
+
+        return prioritized_fonts + other_fonts[:50]  # Limit to reasonable number
+
+    except Exception as e:
+        print(f"Warning: Could not detect system fonts: {e}")
+        return preferred_fonts  # Fallback to preferred list
+
+# Get available fonts
+available_fonts = get_available_fonts()
 
 # Set the output file suffix
 OUTPUT_SUFFIX = "_dashboard"
@@ -13,7 +44,7 @@ size = (40, None)
 
 section1_options = [
     {'label': 'Generate', 'key': 'generate', 'options': ['default', 'overlay', 'none'], 'default_value': 'default', 'tooltip': 'Type of output to generate. Overlay gives only the widgets with no video.'},
-    {'label': 'Font', 'key': 'font', 'options': ['calibri', 'cambria', 'segoe ui', 'segoe print', 'liberation sans'], 'default_value': 'calibri'},
+    {'label': 'Font', 'key': 'font', 'options': available_fonts, 'default_value': available_fonts[0] if available_fonts else 'calibri'},
     {'label': 'Overlay Size', 'key': 'overlay_size', 'tooltip': '<XxY> e.g. 1920x1080 Force size of overlay. Use if video differs from supported bundled \noverlay sizes (1920x1080, 3840x2160), Required if --use-gpx-only (default: None).'},
     {'label': 'Background', 'key': 'bg', 'tooltip': 'Background Colour - R,G,B,A - each 0-255, no spaces! (default: (0, 0, 0, 0))', 'default_value': ''},
     {'label': 'Privacy', 'key': 'privacy', 'tooltip': 'Set privacy zone (lat,lon,km) (default: None)'},
