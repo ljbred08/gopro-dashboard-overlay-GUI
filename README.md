@@ -7,7 +7,7 @@ git clone https://github.com/ljbred08/gopro-dashboard-overlay-GUI.git
 cd gopro-dashboard-overlay-GUI
 pip install -r requirements.txt
 ```
-See [https://docs.pysimplegui.com/en/latest/documentation/installing_licensing/license_keys/](https://docs.pysimplegui.com/en/latest/documentation/installing_licensing/license_keys/) for PySimpleGUI setup.
+See [https://freesimplegui.readthedocs.io/en/latest/](https://freesimplegui.readthedocs.io/en/latest/) for FreeSimpleGUI setup.
 
 Run GUI:
 ```
