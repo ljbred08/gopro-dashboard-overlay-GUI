@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 class CollapsibleSection:
     def __init__(self, layout, title, key, text_color='white', default_state=False):
         """

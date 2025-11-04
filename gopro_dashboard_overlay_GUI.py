@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 import subprocess
 import os
 from collapsible_sections import CollapsibleSection
