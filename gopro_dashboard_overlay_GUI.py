@@ -44,13 +44,13 @@ size = (40, None)
 
 # Main advanced options (visible when Advanced section is expanded)
 main_advanced_options = [
+    {'label': 'Font', 'key': 'font', 'options': available_fonts, 'default_value': available_fonts[0] if available_fonts else 'calibri'},
     {'label': 'GPX/FIT', 'key': 'gpx_fit', 'tooltip': 'Use GPX/FIT file for location / alt / hr / cadence / temp ... (default: None)', 'default_value': '', 'type': 'FileBrowse'},
     {'label': 'Privacy', 'key': 'privacy', 'tooltip': 'Set privacy zone (lat,lon,km) (default: None)'},
     {'label': 'Layout', 'key': 'layout', 'tooltip': '--layout {default,speed-awareness,xml}\nChoose graphics layout (default: default)', 'default_value': 'default', 'options': ['default', 'speed-awareness', 'xml']},
     {'label': 'Layout XML', 'key': 'layout_xml', 'tooltip': 'Use XML File for layout (default: None)', 'default_value': '', 'type': 'FileBrowse'},
     {'label': 'Map API Key', 'key': 'map_api_key', 'tooltip': 'API Key for map provider, if required (default OSM doesn\'t need one) (default: None)', 'default_value': ''},
     {'label': 'Generate', 'key': 'generate', 'options': ['default', 'overlay', 'none'], 'default_value': 'default', 'tooltip': 'Type of output to generate. Overlay gives only the widgets with no video.'},
-    {'label': 'Font', 'key': 'font', 'options': available_fonts, 'default_value': available_fonts[0] if available_fonts else 'calibri'},
     {'label': 'Background', 'key': 'bg', 'tooltip': 'Background Colour - R,G,B,A - each 0-255, no spaces! (default: (0, 0, 0, 0))', 'default_value': ''},
     {'label': 'Overlay Size', 'key': 'overlay_size', 'tooltip': '<XxY> e.g. 1920x1080 Force size of overlay. Use if video differs from supported bundled \noverlay sizes (1920x1080, 3840x2160), Required if --use-gpx-only (default: None).'},
     {'label': 'Config Dir', 'key': 'config_dir', 'tooltip': f'Location of config files (api keys, profiles, ...) (default: {os.path.join(os.path.expanduser("~"), ".gopro-graphics")})', 'default_value': ''},
@@ -179,6 +179,18 @@ for section in [units_section, render_section, gps_control_section, component_co
 # Create the main advanced section
 section1 = CollapsibleSection(advanced_layout, 'Advanced', '-ADVANCED-')
 
+# Create list of all collapsible sections for event handling
+all_collapsible_sections = [
+    section1,
+    gpx_fit_section,
+    units_section,
+    render_section,
+    gps_control_section,
+    component_control_section,
+    loading_section,
+    debug_section,
+]
+
 
 
 # Define the layout
@@ -256,7 +268,7 @@ while True:
         break
     
     try:
-        cs.handle_section_events(window, event, section1)
+        cs.handle_sections_events(window, event, all_collapsible_sections)
     except Exception as e:
         print(f"Error handling section events: {e}")
 
